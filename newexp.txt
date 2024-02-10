@@ -1,0 +1,15 @@
+hi there : 
+ a='Ayush'
+b='Gatu'
+hii='world'
+module.exports={a,b}
+module.exports={'hi':'world',hii}
+
+ 
+
+
+
+ function sayHi(name) {
+    console.log("hi", name);
+}
+module.exports=sayHi; 
