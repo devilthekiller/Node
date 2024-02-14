@@ -1,0 +1,11 @@
+This is awesome :
+     function sayHi(name) {
+    console.log("hi", name);
+}
+module.exports=sayHi; 
+ a='Ayush'
+b='Gatu'
+hii='world'
+module.exports={a,b}
+module.exports={'hi':'world',hii}
+console.log("adsca");

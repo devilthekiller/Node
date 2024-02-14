@@ -1,14 +1,24 @@
 // const { rejects } = require('assert')
-const { readFile, writeFile } = require('fs')
+const { readFile, writeFile } = require('fs').promises
 // const { resolve } = require('path')
-const util  = require('util')
-const readFilePromise = util.promisify(readFile)
-const writeFilePromise = util.promisify(writeFile)
-    
+// const util = require('util')
+// const readFilePromise = util.promisify(readFile)
+// const writeFilePromise = util.promisify(writeFile)
+
 const start = async () => {
     try {
-        const first = await readFilePromise("./2-sayhi.js", 'utf-8')
-        const second = await readFilePromise("./1-names.js", 'utf-8')
+        const first = await readFile("./2-sayhi.js", 'utf-8')
+        const second = await readFile("./1-names.js", 'utf-8')
+        await writeFile(
+            './11promise.txt',
+            `This is awesome :\n     ${first} \n ${second}`,
+            { flag: 'a' }
+
+        )
+
+
+
+
         console.log(first);
         console.log("--------------------------------------------------");
         console.log(second);
