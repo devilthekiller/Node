@@ -1,18 +1,24 @@
-
 const express = require("express")
 const app = express()
 const tasks = require("./routes/tasks")
 
 require("dotenv").config()
+
+const notFound = require("./middleware/not-found")
+
 connectDB = require("./db/connect")
 
 //middleware
+app.use(express.static("./public"))
 app.use(express.json())
+
+app.use(notFound)
 
 
 app.get("/", (req, res) => {
     res.send("<h1>hi <br> go to hell😡😡😡😡 </h1>");
 });
+
 
 
 const start = async () => {
