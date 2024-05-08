@@ -13,7 +13,7 @@ formDOM.addEventListener('submit', async (e) => {
   e.preventDefault()
   const username = usernameInputDOM.value
   const password = passwordInputDOM.value
-z
+
   try {
     const { data } = await axios.post('/api/v1/login', { username, password })
 
