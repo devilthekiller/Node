@@ -1,18 +1,32 @@
 const User = require("../models/User")
 const { StatusCodes } = require("http-status-codes")
-const bcrypt = require("bcryptjs")
+const { BadRequestError, UnauthenticatedError } = require("../errors")
+
+
 const register = async (req, res) => {
-    const {name,email,password}=req.body
-
-const salt = await bcrypt.genSalt(10);
-const hashedPassword = await bcrypt.hash(password,salt)
-
-    const tempUser={name,email,password:hashedPassword}
-    const user = await User.create({...tempUser})
-    res.status(StatusCodes.CREATED).json(user)
+    const user = await User.create({ ...req.body })
+    const token = user.createJWT()
+    res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
     // res.send('user register')
 }
 const login = async (req, res) => {
-    res.send('user login')
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        throw new BadRequestError("pls provide email and password")
+    }
+    const user = await User.findOne({ email })
+    if (!user) {
+        throw new UnauthenticatedError("Invalid Credentials")
+    }
+    const isPasswordCorrect = await user.comparePassword(password)
+    if (!isPasswordCorrect) {
+        throw new UnauthenticatedError("Your Password is incorrect")
+    }
+
+    const token = user.createJWT();
+    res.status(StatusCodes.OK).json({ user: { name: user.name }, token })
+
 }
+
 module.exports = { login, register }
